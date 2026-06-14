@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configura tu Creación | Un Toque Especial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #fdfdfd; padding: 20px 10px; color: #1a1a1a; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-radius: 15px; }
+        
+        /* Estilos de Pestañas */
+        .tabs { display: flex; justify-content: space-between; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .tab { font-size: 0.6rem; text-align: center; color: #ccc; cursor: pointer; transition: 0.3s; flex: 1; }
+        .tab.active { color: #1a1a1a; font-weight: bold; }
+        .tab i { display: block; font-size: 1.2rem; margin-bottom: 5px; }
+        .step { display: none; }
+        .step.active { display: block; }
+
+        h1 { font-family: 'Playfair Display', serif; margin-bottom: 30px; text-align: center; font-weight: 400; }
+        h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin: 25px 0 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; color: #1a1a1a; }
+        
+        .field { margin-bottom: 15px; }
+        label { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; color: #999; }
+        
+        select, input { width: 100%; padding: 10px; border: 1px solid #eee; font-family: inherit; font-size: 14px; }
+        .row { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 480px) { .row { grid-template-columns: 1fr 1fr; } }
+        
+        button { width: 100%; padding: 18px; background: #1a1a1a; color: #fff; border: none; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; cursor: pointer; margin-top: 20px; }
+        button:hover { background: #333; }
+        .glass-summary { text-align: left; background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; font-size: 0.8rem; }
+   
+   .main-layout {
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 40px;
+    align-items: flex-start;
+}
+.preview-container {
+    flex: 0 0 350px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    text-align: center;
+    position: sticky;
+    top: 20px;
+}
+@media (max-width: 900px) {
+    .main-layout { flex-direction: column; }
+    .preview-container { display: none; }
+}
+
+#contenedor-adornos {
+    margin-bottom: 10px;
+}
+.adornos-row {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+
+.btn-siguiente {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 16px;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    color: #555;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-siguiente:hover {
+    background-color: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+}
+
+   </style>
+</head>
+<body>
+
+<div class="main-layout">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 0;">
+            <img src="logo.png" alt="Logo" style="max-width: 250px; height: auto;">
+        </div>
+
+        <h1 style="margin-top: -30px;">Diseña tu Experiencia</h1>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showStep(1, this)"><i class="fas fa-birthday-cake"></i>Pastel</div>
+            <div class="tab" onclick="showStep(2, this)"><i class="fas fa-truck"></i>Entrega</div>
+            <div class="tab" onclick="showStep(3, this)"><i class="fas fa-credit-card"></i>Pago</div>
+        </div>
+
+       <form id="orderForm">
+    <div id="step1" class="step active">
+        <h2>1. Detalles del Pastel</h2>
+        
+        <div class="field">
+            <label>Tipo de evento</label>
+          <select id="eventType" class="text-gray-500" onchange="this.classList.remove('text-gray-500'); filtrarYActualizar();" required>
+    <option value="" disabled selected>(Seleccionar)</option>
+    <option value="boda">Boda</option>
+    <option value="quince">Quince Años</option>
+    <option value="fiesta">Celebración</option>
+</select>
+        </div>
+
+       <div class="row">
+    <div class="field">
+        <label>Tipo de pastel</label>
+        <select id="cakeType" class="text-gray-500" onchange="this.classList.remove('text-gray-500'); actualizarPrevisualizacion();" required>
+            <option value="" disabled selected>(Seleccionar)</option>
+            <option value="Redondo clásico">Redondo clásico</option>
+            <option value="Cuadrado moderno">Cuadrado moderno</option>
+            <option id="opt-niveles" value="Niveles (Wedding)">Niveles (Wedding)</option>
+        </select> </div>
+    <div class="field">
+        <label>Porciones</label>
+        <input type="number" id="portions" placeholder="Min: 16" required>
+    </div>
+</div>
+
+       <div class="row">
+    <div class="field">
+        <label>Masa</label>
+        <select id="flavors" class="text-gray-500" onchange="this.classList.remove('text-gray-500'); actualizarPrevisualizacion();" required>
+            <option value="" disabled selected>(Seleccionar)</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Relleno</label>
+        <select id="fillings" class="text-gray-500" onchange="this.classList.remove('text-gray-500'); actualizarPrevisualizacion();" required>
+            <option value="" disabled selected>(Seleccionar)</option>
+        </select>
+    </div>
+</div>
+
+        <div class="field">
+            <label>Cobertura</label>
+            <select id="cover" class="text-gray-500" onchange="this.classList.remove('text-gray-500'); actualizarPrevisualizacion();" required>
+                <option value="" disabled selected>(Seleccionar)</option>
+                <option>Fondant</option>
+                <option>Buttercream</option>
+                <option>Ganache</option>
+                <option>Naked Cake</option>
+                <option>Royal Icing</option>
+            </select>
+        </div>
+
+<div class="field" id="field-adornos" style="display: none;">
+    <label>Adornos para Wedding Cake</label>
+    <div id="contenedor-adornos">
+        </div>
+    <button type="button" onclick="agregarAdorno()" style="padding: 5px 10px; margin-top: 5px; font-size: 10px; width: auto; background: #555;">+ Agregar otro adorno</button>
+</div>
+
+<button type="button" class="btn-siguiente" onclick="nextStep(2)">
+    Siguiente <i class="fas fa-chevron-right ml-1"></i>
+</button>
+
+
+    </div>
+
+
+    
+            <div id="step2" class="step">
+                <h2>2. Detalles de Entrega</h2>
+                <div class="field"><label>Dirección exacta</label><input type="text" id="address" placeholder="Ej: Calle, casa, referencia" required></div>
+                <div class="row">
+                    <div class="field"><label>Fecha</label><input type="date" id="date" required></div>
+                    <div class="field"><label>Hora</label><input type="time" id="time" required></div>
+                </div>
+                <div class="field"><label>Nombre quien recibe</label><input type="text" id="clientName" placeholder="Nombre completo" required></div>
+                
+                <div class="row">
+                    <div class="field" style="flex: 0 0 120px;">
+                        <label>Código</label>
+                        <select id="countryCode" required>
+                            <option value="+502">🇬🇹 GT (+502)</option>
+                            <option value="+1">🇺🇸 USA (+1)</option>
+                            <option value="+52">🇲🇽 MEX (+52)</option>
+                            <option value="+501">🇧🇿 BZ (+501)</option>
+                            <option value="+503">🇸🇻 SV (+503)</option>
+                            <option value="+504">🇭🇳 HN (+504)</option>
+                            <option value="+505">🇳🇮 NI (+505)</option>
+                            <option value="+506">🇨🇷 CR (+506)</option>
+                            <option value="+507">🇵🇦 PA (+507)</option>
+                        </select>
+                    </div>
+                    <div class="field" style="flex: 1;">
+                        <label>Número de whatsapp</label>
+                        <input type="tel" id="phone" placeholder="Ej: 5555-5555" required>
+                    </div>
+                </div>
+
+<button type="button" class="btn-siguiente" onclick="nextStep(3)">
+    Siguiente <i class="fas fa-chevron-right ml-1"></i>
+</button>
+
+            </div>
+
+            <div id="step3" class="step">
+                <h2>3. Información de Pago</h2>
+                <div style="background: #fff; border: 1px solid #eee; padding: 25px; border-radius: 15px; margin-bottom: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                    <img src="banco.webp" alt="Banco Industrial" style="max-height: 40px; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;">
+                    <div style="text-align: center; font-size: 0.85rem; color: #444; line-height: 1.8;">
+                        <p><b>Cuenta:</b> Monetaria</p>
+                        <p><b>Nombre:</b> Un Toque especial Guatemala</p>
+                        <p style="font-size: 1.1rem; color: #1a1a1a; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; display: inline-block;">
+                            <b>No.</b> 1880100209
+                        </p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Adjuntar Boucher</label>
+                    <input type="file" id="boucher" accept="image/*" required>
+                </div>
+                <button type="submit">Enviar Solicitud</button>
+            </div>
+        </form>
+    </div>
+
+  <div id="preview-area" class="preview-container">
+    <h3>Vista Previa</h3>
+    <img id="cake-preview" src="" alt="Previsualización" style="width: 100%; border-radius: 10px; margin-top: 15px; display: none;">
+    <p id="preview-text" style="margin-top: 15px; font-size: 0.9rem; color: #666;">Selecciona las opciones para ver tu pastel.</p>
+</div>
+</div>
+
+<script>
+    function showStep(n, el) {
+        // Ocultar todos los pasos
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        // Quitar clase activa de todas las pestañas
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        
+        // Mostrar paso seleccionado
+        document.getElementById('step' + n).classList.add('active');
+        
+        // Activar la pestaña correspondiente en la parte superior
+        const tabs = document.querySelectorAll('.tab');
+        if (tabs[n-1]) {
+            tabs[n-1].classList.add('active');
+        }
+    }
+
+    // Nueva función para navegar con los botones
+    function nextStep(n) {
+        showStep(n);
+        // Sincronizar el scroll al inicio del formulario para mejor UX
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAL3qDltyjx8laRhcy7LP7IUebGMNHRI_M",
+        authDomain: "un-toque-especial.firebaseapp.com",
+        projectId: "un-toque-especial",
+        storageBucket: "un-toque-especial.firebasestorage.app",
+        messagingSenderId: "795078620314",
+        appId: "1:795078620314:web:89933274e966fa74c59b23"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const todosLosSabores = ["Almendra", "Amapola", "Amaretto", "Banano", "Brandy", "Café", "Chicle", "Chocolate", "Choco menta", "Coco", "Fresa", "Limón", "Mandarina", "Mango", "Maracuyá", "Mocca", "Naranja", "Pistacho", "Vainilla", "Veteado"];
+    const todosLosRellenos = ["Chocolate", "Chocolate Dubai", "Crema de avellana", "Dulce de leche", "Mermelada de fresa", "Mermelada de higo", "Mermelada de manzana", "Mermelada de mora", "Nutella", "Piña", "Pistacho"];
+
+    // CORRECCIÓN: Usamos innerHTML += para agregar opciones DESPUÉS de la opción "(Seleccionar)" que ya está en tu HTML
+    const flavorsSelect = document.getElementById('flavors');
+    const fillingsSelect = document.getElementById('fillings');
+
+    todosLosSabores.sort().forEach(s => flavorsSelect.innerHTML += `<option>${s}</option>`);
+    todosLosRellenos.sort().forEach(r => fillingsSelect.innerHTML += `<option>${r}</option>`);
+
+    document.getElementById('orderForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Función para convertir archivo a Base64
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        const file = document.getElementById('boucher').files[0];
+        const boucherBase64 = await toBase64(file);
+
+        const p = {
+            evento: document.getElementById('eventType').value,
+            pastel: document.getElementById('cakeType').value,
+            sabor: document.getElementById('flavors').value,
+            relleno: document.getElementById('fillings').value,
+            cobertura: document.getElementById('cover').value,
+            porciones: document.getElementById('portions').value,
+            fecha: document.getElementById('date').value,
+            hora: document.getElementById('time').value,
+            cliente: document.getElementById('clientName').value,
+            telefono: document.getElementById('countryCode').value + " " + document.getElementById('phone').value,
+            direccion: document.getElementById('address').value,
+            boucher: boucherBase64,
+            adornos: Array.from(document.querySelectorAll('.adornos-select')).map(sel => sel.value).join(', ') || "Ninguno",
+        };
+
+        const result = await Swal.fire({
+            title: 'Resumen de Pedido',
+            html: `
+    <div class="glass-summary" style="text-align: left; line-height: 1.6;">
+        <h3 style="margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Detalles del Pastel</h3>
+        <p><b>Evento:</b> ${p.evento.toUpperCase()}</p>
+        <p><b>Estilo:</b> ${p.pastel} | <b>Cobertura:</b> ${p.cobertura}</p>
+        <p><b>Sabor:</b> ${p.sabor} | <b>Relleno:</b> ${p.relleno}</p>
+        <p><b>Porciones:</b> ${p.porciones}</p>
+        <p style="background: #f4f4f4; padding: 8px; border-radius: 5px;"><b>Adornos:</b> ${p.adornos}</p>
+        
+        <h3 style="margin-top:20px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">Detalles de Entrega</h3>
+        <p><b>Dirección:</b> ${p.direccion}</p>
+        <p><b>Fecha:</b> ${p.fecha} | <b>Hora:</b> ${p.hora}</p>
+        <p><b>Cliente:</b> ${p.cliente}</p>
+        <p><b>Tel:</b> ${p.telefono}</p>
+        
+        <h3 style="margin-top:20px;">Boucher</h3>
+        <img src="${p.boucher}" style="width:120px; margin: 10px auto; border: 1px solid #ccc; display: block;">
+    </div>`,
+            showCancelButton: true, confirmButtonText: 'Confirmar', cancelButtonText: 'Editar',
+            confirmButtonColor: '#1a1a1a', cancelButtonColor: '#666', background: 'transparent', backdrop: 'rgba(0,0,0,0.4)'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await addDoc(collection(db, "pedidos"), { ...p, timestamp: new Date() });
+                Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: '¡Pedido enviado!', showConfirmButton: false, timer: 3000 });
+                document.getElementById('orderForm').reset();
+            } catch (error) { Swal.fire('Error', 'No se pudo enviar.', 'error'); }
+        }
+    });
+
+    window.filtrarYActualizar = function() {
+        const evento = document.getElementById('eventType').value;
+        const selectTipo = document.getElementById('cakeType');
+        const optNiveles = document.getElementById('opt-niveles');
+
+        if (evento === 'quince' || evento === 'fiesta') {
+            if (optNiveles) optNiveles.style.display = 'none';
+            if (selectTipo.value === 'Niveles (Wedding)') {
+                selectTipo.value = ""; 
+            }
+        } else {
+            if (optNiveles) optNiveles.style.display = 'block';
+        }
+        actualizarPrevisualizacion();
+    };
+
+  window.actualizarPrevisualizacion = function() {
+    const evento = document.getElementById('eventType').value;
+    const tipo = document.getElementById('cakeType').value;
+    const masa = document.getElementById('flavors').value;
+    
+    const coverEl = document.getElementById('cover');
+    const cobertura = coverEl ? coverEl.options[coverEl.selectedIndex].text : "";
+    
+    const previewImg = document.getElementById('cake-preview');
+    const previewText = document.getElementById('preview-text');
+    
+    // Contenedor principal de adornos
+    const fieldAdornos = document.getElementById('field-adornos');
+    const contenedorAdornos = document.getElementById('contenedor-adornos');
+
+    if (evento === 'boda' && tipo === 'Niveles (Wedding)') {
+        if (fieldAdornos) {
+            fieldAdornos.style.display = 'block';
+            if (contenedorAdornos.children.length === 0) {
+                agregarAdorno();
+            }
+        }
+    } else {
+        if (fieldAdornos) {
+            fieldAdornos.style.display = 'none';
+            if (contenedorAdornos) contenedorAdornos.innerHTML = ""; 
+        }
+    }
+
+    previewImg.style.display = 'none';
+    previewText.innerHTML = "";
+
+    // Lógica de imágenes (aplica a Niveles o Redondo)
+    if (tipo === 'Niveles (Wedding)' || tipo === 'Redondo clásico') {
+        
+        // --- LÓGICA INTEGRADA DE NAKED CAKE ---
+        if (cobertura === 'Naked Cake' || cobertura === 'Semi-Naked') {
+            
+            // 1. Coco
+            if (evento === 'boda' && tipo === 'Niveles (Wedding)' && masa === 'Coco') {
+                previewImg.src = 'naked3.png';
+            } 
+            // 2. Cítricos
+            else if (evento === 'boda' && tipo === 'Niveles (Wedding)' && 
+                    ['Mandarina', 'Mango', 'Maracuyá', 'Naranja'].includes(masa)) {
+                previewImg.src = 'naked4.png';
+            }
+            // 3. Nuevo: Chicle o Fresa
+            else if (evento === 'boda' && tipo === 'Niveles (Wedding)' && 
+                    ['Chicle', 'Fresa'].includes(masa)) {
+                previewImg.src = 'naked5.png';
+            }
+            // 4. Masas oscuras y resto
+            else {
+                const masasOscuras = ["Chocolate", "Choco menta", "Veteado", "Mocca"];
+                previewImg.src = masasOscuras.includes(masa) ? 'naked1.png' : 'naked2.png';
+            }
+            
+            previewImg.style.display = 'block';
+            previewText.innerHTML = `<b>Vista previa:</b> ${cobertura}<br><small style='color: #888;'>Imagen con fines ilustrativos</small>`;
+        } 
+        // --- FIN INTEGRACIÓN ---
+        
+        else if (cobertura === 'Fondant') {
+            previewImg.src = 'fondant.png';
+            previewImg.style.display = 'block';
+            previewText.innerHTML = "<b>Vista previa:</b> Fondant<br><small style='color: #888;'>Imagen con fines ilustrativos</small>";
+        } else if (cobertura === 'Buttercream') {
+            previewImg.src = 'buttercream.png';
+            previewImg.style.display = 'block';
+            previewText.innerHTML = "<b>Vista previa:</b> Buttercream<br><small style='color: #888;'>Imagen con fines ilustrativos</small>";
+        } else if (cobertura === 'Ganache') {
+            previewImg.src = 'ganache.png';
+            previewImg.style.display = 'block';
+            previewText.innerHTML = "<b>Vista previa:</b> Ganache<br><small style='color: #888;'>Imagen con fines ilustrativos</small>";
+        } else if (cobertura === 'Royal Icing') {
+            previewImg.src = 'royalicing.png';
+            previewImg.style.display = 'block';
+            previewText.innerHTML = "<b>Vista previa:</b> Royal Icing<br><small style='color: #888;'>Imagen con fines ilustrativos</small>";
+        } 
+        else {
+            const imagenes = {
+                'Almendra': 'almendra.png', 'Amapola': 'amapola.png', 'Amaretto': 'amaretto.png', 
+                'Banano': 'banano.png', 'Brandy': 'brandy.png', 'Café': 'cafe.png', 
+                'Chicle': 'chicle.png', 'Choco menta': 'chocomenta.png', 'Chocolate': 'chocolate.png', 'Coco': 'coco.png',
+                'Fresa': 'fresa.png', 'Limón': 'limon.png', 'Mandarina': 'mandarina.png', 'Mango': 'mango.png', 'Maracuyá': 'maracuya.png',
+                'Mocca': 'mocca.png', 'Naranja': 'naranja.png', 'Pistacho': 'pistacho.png', 'Vainilla': 'vainilla.png','Veteado': 'veteado.png'
+            };
+
+            if (imagenes[masa]) {
+                previewImg.src = imagenes[masa];
+                previewImg.style.display = 'block';
+                previewText.innerHTML = `<b>Vista previa:</b> ${masa}<br><small style='color: #888;'>Imagen con fines ilustrativos</small>`;
+            }
+        }
+    }
+};
+
+
+window.agregarAdorno = function() {
+    const contenedor = document.getElementById('contenedor-adornos');
+    const div = document.createElement('div');
+    div.className = 'adornos-row';
+    // Usamos flexbox para alinear
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.marginBottom = '10px';
+    div.style.gap = '8px';
+    
+    div.innerHTML = `
+        <select class="adornos-select" style="flex: 1; min-width: 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
+            <option value="Flores Naturales">Flores Naturales</option>
+            <option value="Muñecos (Novios)">Muñecos (Novios)</option>
+            <option value="Topper Personalizado">Topper Personalizado</option>
+            <option value="Perlas Comestibles">Perlas Comestibles</option>
+            <option value="Cinta de Seda">Cinta de Seda</option>
+        </select>
+        <button type="button" onclick="this.parentElement.remove()" style="width: 40px; height: 40px; flex-shrink: 0; background: #ff4d4d; border:none; color:white; cursor:pointer; border-radius: 5px; font-weight: bold; display: flex; align-items: center; justify-content: center;">X</button>
+    `;
+    contenedor.appendChild(div);
+};
+
+
+</script>
+</body>
+</html>

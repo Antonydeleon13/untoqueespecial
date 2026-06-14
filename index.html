@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastelería Artesanal | El Sabor de la Excelencia</title>
+    <!-- Montserrat para limpieza, Playfair Display para sofisticación -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+   
+   <style>
+    /* 1. Limpieza y Fluidez */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        color: #1a1a1a; 
+        line-height: 1.6; 
+        background-color: #fdfdfd; /* Un blanco un poco más cálido */
+    }
+    
+    /* 2. HERO: Estilo Editorial */
+    /* 2. HERO: Fondo de Pastel a pantalla completa */
+    .hero { 
+        height: 100vh; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        text-align: center; 
+        padding: 20px;
+        position: relative;
+        /* Aquí va el pastel: usamos un gradiente blanco semitransparente encima de la foto */
+        background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+                    url('https://cdn.babyseo.ai/images/foodshot.ai/cake-photography/cake-photography-hero-wedding-cake-window-light.webp') center/cover no-repeat;
+    }
+
+    
+    .hero img { width: 180px; margin-bottom: 40px; opacity: 0.9; }
+    .hero h1 { 
+        font-family: 'Playfair Display', serif; 
+        font-size: clamp(2.5rem, 8vw, 5rem); /* Ajuste dinámico de tamaño */
+        font-weight: 400; 
+        margin-bottom: 20px; 
+        letter-spacing: -1px; 
+    }
+    .hero p { 
+        font-size: 0.9rem; 
+        font-weight: 300; 
+        margin-bottom: 50px; 
+        text-transform: uppercase; 
+        letter-spacing: 0.3rem; 
+        color: #444; 
+    }
+
+    /* 3. BOTÓN PREMIUM: Con efecto de expansión */
+    .btn { 
+        padding: 18px 50px; 
+        border: 1px solid #1a1a1a; 
+        text-decoration: none; 
+        color: #1a1a1a; 
+        font-size: 0.75rem;
+        text-transform: uppercase; 
+        letter-spacing: 0.2rem;
+        transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        background: transparent;
+    }
+    .btn:hover { 
+        background: #1a1a1a; 
+        color: #ffffff; 
+        letter-spacing: 0.4rem; /* Expansión visual al pasar el cursor */
+    }
+
+    /* 4. SERVICIOS: Tarjetas elevadas */
+    .services { padding: 120px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
+    .services h2 { 
+        font-family: 'Playfair Display', serif; 
+        font-size: 2.5rem; 
+        margin-bottom: 80px; 
+        font-weight: 400; 
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
+    
+    .card { padding: 20px; transition: transform 0.4s ease; }
+    .card:hover { transform: translateY(-10px); } /* Sutil elevación */
+    
+    .card h3 { 
+        font-family: 'Playfair Display', serif; 
+        font-size: 1.5rem; 
+        margin-bottom: 20px; 
+        font-weight: 400; 
+        position: relative;
+    }
+    .card p { 
+        font-weight: 300; 
+        font-size: 0.95rem; 
+        color: #666; 
+        line-height: 1.7; 
+    }
+
+        /* FOOTER */
+        footer { padding: 60px 20px; text-align: center; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #999; }
+    </style>
+
+    
+</head>
+<body>
+
+    <section class="hero">
+        <img src="logo.png" alt="Logotipo">
+        <h1>Arte hecho Pastel</h1>
+        <p>Experiencias dulces a medida</p>
+        <a href="cliente.html" class="btn">REALIZAR PEDIDO</a>
+    </section>
+
+
+    
+    <section class="services">
+        <h2>Nuestras Especialidades</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Bodas de Ensueño</h3>
+                <p>Diseños exclusivos que capturan la esencia de su gran día con elegancia atemporal.</p>
+            </div>
+            <div class="card">
+                <h3>Eventos Corporativos</h3>
+                <p>Refinamiento y sabor impecable para destacar la imagen de su marca o empresa.</p>
+            </div>
+            <div class="card">
+                <h3>Celebraciones</h3>
+                <p>Detalles únicos para cumpleaños y momentos especiales que merecen ser recordados.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 UN TOQUE ESPECIAL. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
